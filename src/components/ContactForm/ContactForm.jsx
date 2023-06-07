@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, FormLabel, Input } from './ContactForm.styled';
 import { nanoid } from 'nanoid';
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
+ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const INITIAL_STATE = {
   name: '',
@@ -21,7 +21,20 @@ const ContactForm = ({ onAdd }) => {
     e.preventDefault();
 
     const { name, number } = formData;
+  const validateForm = newContact => {
+  const { name, number } = newContact;
 
+  if (!name || !number) {
+    Notify.failure('Some field is empty');
+    return false;
+  }
+
+  return true;
+};
+
+if (!validateForm({ name, number })) {
+  return;
+}
    
 
     onAdd({ id: nanoid(), name, number });

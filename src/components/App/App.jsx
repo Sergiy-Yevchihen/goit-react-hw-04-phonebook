@@ -9,19 +9,13 @@ import Filter from '../Filter';
 
 
 const App = () => {
-  // const [contacts, setContacts] = useState([]);
+  
   const [contacts, setContacts] = useState(() => {
     return JSON.parse(window.localStorage.getItem('contacts')) ?? [];});
     
     const [filter, setFilter] = useState('');
   
-  // useEffect(() => {
-  //   const savedContacts = localStorage.getItem('contacts');
-
-  //   if (savedContacts) {
-  //     setContacts(JSON.parse(savedContacts));
-  //   }
-  // }, []);
+  
 
   useEffect(() => {
     window.localStorage.setItem('contacts', JSON.stringify(contacts));
@@ -37,24 +31,13 @@ const App = () => {
       return !isExistContact;
     }
 
-    const isValidateForm = validateForm(newContact);
-
-    if (!isValidateForm) return;
+   
 
     setContacts(prevContacts => [...prevContacts, newContact]);
     alert('Contact is added to the phonebook');
   };
 
-  const validateForm = newContact => {
-    const { name, number } = newContact;
-
-    if (!name || !number) {
-      Notify.failure('Some field is empty');
-      return false;
-    }
-
-    return true;
-  };
+ 
 
   const handleRemoveContact = id => {
     setContacts(prevContacts =>
