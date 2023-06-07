@@ -6,20 +6,25 @@ import Section from '../Section';
 import { ContactList } from '../ContactList/ContactList';
 import Filter from '../Filter';
 
+
+
 const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(() => {
+    return JSON.parse(window.localStorage.getItem('contacts')) ?? [];});
+    
+    const [filter, setFilter] = useState('');
+  
+  // useEffect(() => {
+  //   const savedContacts = localStorage.getItem('contacts');
+
+  //   if (savedContacts) {
+  //     setContacts(JSON.parse(savedContacts));
+  //   }
+  // }, []);
 
   useEffect(() => {
-    const savedContacts = localStorage.getItem('contacts');
-
-    if (savedContacts) {
-      setContacts(JSON.parse(savedContacts));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
+    window.localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
   const handleAddContact = newContact => {
